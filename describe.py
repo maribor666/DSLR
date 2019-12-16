@@ -13,8 +13,8 @@ def main():
 	lines = [line for line in reader]
 	file.close()
 	data = parse_data(lines)
-	# for col_name in data:
-		# print(col_name, data[col_name][0])
+	for col_name in data:
+		print(col_name, data[col_name][0])
 	# ill count numerical features only where column names is number except 'Index'
 	counts = [len(data[col_name]) for col_name in data if isinstance(data[col_name][0], float)]
 	# pprint(counts)
