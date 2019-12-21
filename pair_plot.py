@@ -1,4 +1,3 @@
-# add argeparse
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -24,8 +23,6 @@ houses = ['Ravenclaw', 'Slytherin', 'Gryffindor', 'Hufflepuff']
 
 
 def main():
-	# add: argparse 
-
 	try:
 		df = pd.read_csv(dataset_path, index_col=0)
 	except FileNotFoundError as e:
@@ -44,8 +41,8 @@ def main():
 
 	for i in range(len(courses)):
 		grouped_df[courses[i]].plot(kind='hist', alpha=0.5, ax=axes[i][i])
-		axes[i][i].set_xlabel(courses[i])
-		axes[i][i].set_ylabel(courses[i])
+		axes[i][i].set_xlabel(courses[i].replace(' ', '\n'), fontsize=8)
+		axes[i][i].set_ylabel(courses[i].replace(' ', '\n'), fontsize=8)
 
 
 	for i, xi in enumerate(courses):

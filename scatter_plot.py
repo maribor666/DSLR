@@ -1,4 +1,3 @@
-# add argeparse
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -24,8 +23,6 @@ houses = ['Ravenclaw', 'Slytherin', 'Gryffindor', 'Hufflepuff']
 
 
 def main():
-	# add: argparse 
-
 	try:
 		df = pd.read_csv(dataset_path, index_col=0)
 	except FileNotFoundError as e:

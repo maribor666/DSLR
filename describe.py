@@ -1,37 +1,32 @@
 import math
-import argparse # add argparse
+import argparse
 import csv
 import collections
 from pprint import pprint
 
 
-dataset_path = "./dataset_train.csv"
+def_dataset_path = "./dataset_train.csv"
 
 def main():
+	parser = argparse.ArgumentParser()
+	parser.add_argument("dataset", help="Path to dataset for describing.", default=def_dataset_path)
+
+	args = parser.parse_args()
+	dataset_path = args.dataset
+
 	file = open(dataset_path, mode='r')
 	reader = csv.reader(file)
 	lines = [line for line in reader]
 	file.close()
 	data = parse_data(lines)
-	for col_name in data:
-		print(col_name, data[col_name][0])
-	# ill count numerical features only where column names is number except 'Index'
 	counts = [len(data[col_name]) for col_name in data if isinstance(data[col_name][0], float)]
-	# pprint(counts)
 	means = find_mean(data)
-	# pprint(means)
 	stds = find_stds(data)
-	# pprint(stds)
 	minimals = [min(data[col_name]) for col_name in data if isinstance(data[col_name][0], float)]
-	# pprint(minimals)
 	maximals = [max(data[col_name]) for col_name in data if isinstance(data[col_name][0], float)]
-	# pprint(maximals)
 	quantiles25 = find_quantile(data, 0.25)
-	# pprint(quantiles25)
 	quantiles50 = find_quantile(data, 0.5)
-	# pprint(quantiles50)
 	quantiles75 = find_quantile(data, 0.75)
-	# pprint(quantiles75)
 	statistics = {
 		'Count': counts,
 		'Mean': means,
@@ -62,14 +57,11 @@ def print_output(statistics):
 		print()
 		for key in statistics:
 			print("{:15}".format(key), end='')
-			# print(i,'|', end='')
 			if i == features_num:
 				print('{:>15f}'.format(statistics[key][-1]), end='')
 			else:
 				for j in m:
-					# print(j, end='')
 					print('{:>15f}'.format(statistics[key][i - j]), end='')
-
 			print()
 
 
@@ -126,10 +118,6 @@ def parse_data(lines):
 				data[col_name].append(el)
 				continue
 			data[col_name].append(val)
-	
-	# for col_name in data:
-	# 	types = set([type(el) for el in data[col_name]])
-	# 	print(types)
 
 	for col_name in data:
 		data[col_name] = sorted(data[col_name])

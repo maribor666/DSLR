@@ -1,9 +1,9 @@
 import csv
-# add argeparse
+import argparse
 import pandas as pd
 import matplotlib.pyplot as plt
 
-dataset_path = "./dataset_train.csv"
+def_dataset_path = "./dataset_train.csv"
 
 courses = [
 	'Arithmancy',
@@ -25,7 +25,11 @@ houses = ['Ravenclaw', 'Slytherin', 'Gryffindor', 'Hufflepuff']
 
 
 def main():
-	#arg parse
+	parser = argparse.ArgumentParser()
+	parser.add_argument("-dataset", help="Path to dataset for describing.", default=def_dataset_path)
+
+	args = parser.parse_args()
+	dataset_path = args.dataset
 
 	try:
 		df = pd.read_csv(dataset_path, index_col=0)
@@ -34,7 +38,6 @@ def main():
 		exit(1)
 	plt.figure(figsize=(8, 6))
 	grouped_df = df.groupby('Hogwarts House')
-	# [courses[0]].plot(kind='hist', alpha=0.5)
 	for course in courses:
 		grouped_df[course].plot(kind='hist', alpha=0.5)
 		plt.title(course)
